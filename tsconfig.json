@@ -27,7 +27,7 @@
     "skipDefaultLibCheck": true,
     "useUnknownInCatchVariables": false,
     "paths": {
-      "AppDir/*": ["src/*"],
+      "AppDir/*": ["src/app/*"],
     }
   },
   "exclude": [
