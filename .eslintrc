@@ -1,0 +1,116 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "eslint:recommended",
+    "plugin:prettier/recommended",
+    "plugin:react/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript",
+    "plugin:react-hooks/recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "plugins": [
+    "react",
+    "import",
+    "@typescript-eslint"
+  ],
+  "parserOptions": {
+    "ecmaFeatures": { "jsx": true },
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    },
+    "import/resolver": {
+      "node": {
+        "extensions": [
+          ".ts",
+          ".tsx"
+        ]
+      }
+    }
+  },
+  "env": {
+    "es6": true,
+    "browser": true,
+    "amd": true,
+    "node": true
+  },
+  "globals": {
+    "process": true,
+    "currentUser": true
+  },
+  "overrides": [{
+    "files": ["**/*.js*"],
+    "rules": {
+      "@typescript-eslint/no-var-requires": "off"
+    }
+  }],
+  "rules": {
+    "quotes": [
+      "error",
+      "double"
+    ],
+    "curly": [
+      "error",
+      "all"
+    ],
+    "no-duplicate-imports": "error",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "no-trailing-spaces": "error",
+    "@typescript-eslint/no-empty-interface": "off",
+    "no-empty-interface": "off",
+    "max-len": [
+      "warn",
+      {
+        "ignorePattern": "^import\\s.+\\sfrom\\s.+;$",
+        "code": 120,
+        "comments": 120,
+        "ignoreTemplateLiterals": true,
+        "ignoreUrls": true,
+        "ignoreStrings": true
+      }
+    ],
+    "no-multiple-empty-lines": [
+      "error", {
+        "max": 1,
+        "maxEOF": 0
+      }
+    ],
+    "prettier/prettier": [
+      "error",
+      {
+        "printWidth": 100,
+        "tabWidth": 2,
+        "trailingComma": "all",
+        "semi": true,
+        "endOfLine": "auto"
+      }
+    ],
+    "object-shorthand": "error",
+    "react/display-name": "off",
+    "react/prop-types": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "import/order": [
+      "error", {
+        "groups": [
+          ["external"],
+          ["builtin"],
+          ["internal"],
+          ["parent"],
+          ["sibling"],
+          ["object"],
+          ["index"]
+        ],
+        "newlines-between": "always",
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ]
+  }
+}
