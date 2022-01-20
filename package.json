@@ -1,0 +1,19 @@
+{
+  "name": "l-video-editor",
+  "version": "0.0.1",
+  "description": "In-browser video editor",
+  "main": "src/main.tsx",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mix0000/l-video-editor.git"
+  },
+  "author": "Lookarious",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mix0000/l-video-editor/issues"
+  },
+  "homepage": "https://github.com/mix0000/l-video-editor#readme"
+}
