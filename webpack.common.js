@@ -2,6 +2,7 @@ const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const HtmlWebpackHarddiskPlugin = require("html-webpack-harddisk-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
 
 const path = require("path");
 const isDev = process.env.NODE_ENV === "development";
@@ -36,6 +37,7 @@ module.exports = {
     umdNamedDefine: true,
   },
   plugins: [
+    new NodePolyfillPlugin(),
     new HtmlWebpackPlugin({
       title: "L Video Editor",
       filename: "index.html",

@@ -1,9 +1,16 @@
-.counter-container {
-  user-select: none;
-  display: flex;
-  flex-direction: column;
-  margin: 0 24px;
+body {
+  position: relative;
 }
-.counter-buttons {
-  margin-top: 20px;
+
+.loading {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .ant-spin {
+    color: rgba(0,0,0,.85);
+  }
 }

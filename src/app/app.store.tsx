@@ -1,9 +1,9 @@
 import React, { createContext, useContext } from "react";
 
-import { counterStore } from "AppDir/store/CounterStore";
+import { ffmpegStore } from "../ffmpeg";
 
 export interface RootStoreContextValue {
-  counterStore: typeof counterStore;
+  ffmpegStore: typeof ffmpegStore;
 }
 
 export interface WithRootStoreProps {
@@ -11,7 +11,7 @@ export interface WithRootStoreProps {
 }
 
 export const rootStore: RootStoreContextValue = {
-  counterStore,
+  ffmpegStore,
 };
 
 export const RootStoreContext = createContext<RootStoreContextValue>({} as RootStoreContextValue);
