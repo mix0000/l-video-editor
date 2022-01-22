@@ -18,5 +18,14 @@ export const Preview = observer(() => {
     return null;
   }
 
-  return <video width="100%" autoPlay={true} muted={true} controls={true} src={currentFileSrc} />;
+  return (
+    <video
+      className="video-preview"
+      width="100%"
+      loop={true}
+      muted={true}
+      controls={true}
+      src={currentFileSrc}
+    />
+  );
 });

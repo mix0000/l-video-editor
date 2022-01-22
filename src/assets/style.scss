@@ -1,16 +1,128 @@
+@font-face {
+  font-family: 'Dongle';
+  src: url(fonts/dongle/Dongle-Light.ttf) format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Dongle';
+  src: url(fonts/dongle/Dongle-Regular.ttf) format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Dongle';
+  src: url(fonts/dongle/Dongle-Bold.ttf) format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Nunito';
+  src: url(fonts/nunito/Nunito-Light.ttf) format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Nunito';
+  src: url(fonts/nunito/Nunito-Regular.ttf) format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Nunito';
+  src: url(fonts/nunito/Nunito-Bold.ttf) format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
 body {
-  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
 }
 
 .loading {
-  position: absolute;
-  height: 100%;
-  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
 
   .ant-spin {
     color: rgba(0,0,0,.85);
+  }
+}
+
+.site-page-header {
+  border-bottom: 1px solid rgba(0,0,0,.13);
+  margin-bottom: 1rem;
+}
+
+.video-preview {
+  margin-top: 1rem;
+}
+
+.dashboard-section {
+  background-color: #F7F6F9;
+  border-radius: 8px;
+  padding: 1rem 3rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+
+  .dashboard-section-title {
+    color: #1A2034;
+    font-size: 2rem;
+    font-weight: bold;
+    font-family: Nunito, sans-serif;
+  }
+
+  .dashboard-elements {
+    display: flex;
+    flex-direction: row;
+
+    .dashboard-element {
+      max-width: 200px;
+      border-radius: 8px;
+      padding: 1rem 2rem;
+      cursor: pointer;
+
+      .icon-container {
+        border-radius: 100%;
+        background-color: #EEEDF2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 80px;
+        height: 80px;
+        margin-bottom: 2rem;
+
+        .anticon {
+          color: #1A2034;
+          font-size: 36px;
+        }
+      }
+
+      .title {
+        font-family: Dongle, sans-serif;
+        font-weight: bold;
+        font-size: 2rem;
+        margin-bottom: 0;
+      }
+
+      &:hover {
+        background-color: white;
+
+        .icon-container {
+          background-color: #0097FD;
+
+          .anticon {
+            color: white;
+          }
+        }
+
+        .title {
+          color: #0097FD;
+        }
+
+      }
+    }
   }
 }
