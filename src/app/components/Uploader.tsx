@@ -7,6 +7,8 @@ import { observer } from "mobx-react-lite";
 import { UploadRequestOption as RcCustomRequestOptions } from "rc-upload/lib/interface";
 import React from "react";
 import { ffmpegStore } from "../../ffmpeg";
+import { mediaInfoStore } from "../../mediaInfo";
+import { getFileExtension } from "../../utils/utils";
 
 const allowedTypes = [
   "video/mpeg",
@@ -22,11 +24,30 @@ const allowedTypes = [
 ];
 
 async function toFfmpeg(file: RcFile) {
-  console.log(file);
+  const { mediaInfo } = mediaInfoStore;
   message.info("Converting file to blob!");
   const currentVideoFile = await fetchFile(file);
+  const result = await mediaInfo?.analyzeData(
+    () => currentVideoFile.length,
+    () => currentVideoFile,
+  );
+
+  if (typeof result === "object") {
+    const videoInfo = result?.media?.track.find((type) => type["@type"] === "Video");
+    const details = {
+      duration: Number(videoInfo?.Duration),
+      fileSize: currentVideoFile.length,
+      framerate: Number(videoInfo?.FrameRate),
+      width: Number(videoInfo?.Width),
+      height: Number(videoInfo?.Height),
+      type: file.type,
+      extension: getFileExtension(file.name),
+    };
+    console.log(details);
+  }
+
   runInAction(() => {
-    ffmpegStore.currentFile = currentVideoFile;
+    ffmpegStore.currentFile = { file: currentVideoFile, name: file.name, type: file.type };
   });
 }
 

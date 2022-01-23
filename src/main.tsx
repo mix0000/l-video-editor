@@ -7,6 +7,8 @@ import { rootStore, RootStoreProvider } from "AppDir/app.store";
 import "antd/dist/antd.css";
 import "./assets/style.scss";
 import { Dashboard } from "AppDir/pages/Dashboard";
+import { Upload } from "AppDir/pages/Upload";
+import { VideoToGif } from "AppDir/pages/VideoToGif";
 
 const EmptyRoute = ({ title }: { title: string }) => {
   useEffect(() => {
@@ -18,10 +20,19 @@ const EmptyRoute = ({ title }: { title: string }) => {
   return <span>{title}</span>;
 };
 
-const Main = observer(() => {
-  return rootStore.ffmpegStore.status ? (
+const routes = {
+  "/": () => <Upload where="/dashboard" />,
+  "/dashboard": () => <Dashboard />,
+  "/videoToGif": () => <VideoToGif />,
+  "/compressVideo": () => <EmptyRoute title="Compress video" />,
+};
+
+export const Router = observer(() => {
+  const routeResult = useRoutes(routes);
+
+  return [rootStore.ffmpegStore.status, rootStore.mediaInfoStore.isReady].every(Boolean) ? (
     <RootStoreProvider store={rootStore}>
-      <Dashboard />
+      {routeResult || <EmptyRoute title="404 MOTHERFUCKER" />}
     </RootStoreProvider>
   ) : (
     <div className="loading">
@@ -29,17 +40,5 @@ const Main = observer(() => {
     </div>
   );
 });
-
-const routes = {
-  "/": () => <Main />,
-  "/videoToGif": () => <EmptyRoute title="Video to GIF" />,
-  "/compressVideo": () => <EmptyRoute title="Compress video" />,
-};
-
-export const Router = () => {
-  const routeResult = useRoutes(routes);
-
-  return routeResult || <EmptyRoute title="404 MOTHERFUCKER" />;
-};
 
 ReactDOM.render(<Router />, document.getElementById("app"));

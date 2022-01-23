@@ -11,7 +11,7 @@ export const Preview = observer(() => {
     if (!currentFile) {
       return null;
     }
-    return URL.createObjectURL(new Blob([currentFile.buffer]));
+    return URL.createObjectURL(new Blob([currentFile.file.buffer]));
   }, [currentFile]);
 
   if (!currentFileSrc) {
@@ -21,7 +21,6 @@ export const Preview = observer(() => {
   return (
     <video
       className="video-preview"
-      width="100%"
       loop={true}
       muted={true}
       controls={true}

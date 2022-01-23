@@ -1,4 +1,5 @@
 import { FileZipOutlined, GifOutlined } from "@ant-design/icons";
+import { Button } from "antd";
 import { navigate } from "hookrouter";
 import React, { ReactNode } from "react";
 
@@ -36,12 +37,15 @@ const dashboardElements: DashboardElementProps[] = [
 
 export const Dashboard = () => {
   return (
-    <section className="dashboard-section">
+    <section className="base-container dashboard-section">
       <div className="dashboard-elements">
         {dashboardElements.map((dashboardElementProps) => {
           return <DashboardElement key={dashboardElementProps.title} {...dashboardElementProps} />;
         })}
       </div>
+      <Button className="back-button" onClick={() => history.back()}>
+        Back
+      </Button>
     </section>
   );
 };

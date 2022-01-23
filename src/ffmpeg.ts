@@ -8,7 +8,7 @@ const ffmpeg = createFFmpeg({
 
 interface FfmpegStore {
   ffmpeg: FFmpeg;
-  currentFile: Uint8Array | null;
+  currentFile: { file: Uint8Array; name: string; type: string } | null;
   status: boolean;
 }
 

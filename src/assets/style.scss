@@ -61,12 +61,15 @@ body {
   margin-top: 1rem;
 }
 
-.dashboard-section {
+.base-container {
   background-color: #F7F6F9;
   border-radius: 8px;
   padding: 1rem 3rem;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  max-width: 900px;
+}
 
+.dashboard-section {
   .dashboard-section-title {
     color: #1A2034;
     font-size: 2rem;
@@ -125,4 +128,36 @@ body {
       }
     }
   }
+
+  .back-button {
+    margin-top: 1rem;
+  }
+}
+
+.upload-container {
+  display: flex;
+  flex-direction: column;
+
+  .ant-upload {
+    border-radius: 8px;
+
+    .ant-upload-drag-container {
+      padding: 0 3rem;
+    }
+  }
+
+  .next-button {
+    margin-left: auto;
+    margin-top: 1rem;
+  }
+}
+
+.video-preview {
+  max-width: 100%;
+  border-radius: 12px;
+}
+
+h1, h2, h3, h4, h5, h6, title {
+  font-family: Nunito, sans-serif;
+  font-weight: bold;
 }

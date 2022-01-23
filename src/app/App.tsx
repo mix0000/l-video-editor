@@ -9,7 +9,7 @@ export function App() {
     <>
       <PageHeader
         className="site-page-header"
-        title="L Video Editor"
+        title="Upload video"
         extra={
           <Button key="save-as-button" type="primary">
             Save as..

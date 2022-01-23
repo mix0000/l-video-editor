@@ -1,9 +1,11 @@
 import React, { createContext, useContext } from "react";
 
 import { ffmpegStore } from "../ffmpeg";
+import { mediaInfoStore } from "../mediaInfo";
 
 export interface RootStoreContextValue {
   ffmpegStore: typeof ffmpegStore;
+  mediaInfoStore: typeof mediaInfoStore;
 }
 
 export interface WithRootStoreProps {
@@ -12,6 +14,7 @@ export interface WithRootStoreProps {
 
 export const rootStore: RootStoreContextValue = {
   ffmpegStore,
+  mediaInfoStore,
 };
 
 export const RootStoreContext = createContext<RootStoreContextValue>({} as RootStoreContextValue);

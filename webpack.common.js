@@ -74,6 +74,9 @@ module.exports = {
       AppDir: path.resolve(__dirname, "src/app"),
     },
     extensions: ["*", ".ts", ".tsx", ".js", ".jsx"],
+    fallback: {
+      fs: false,
+    },
   },
   module: {
     rules: [
