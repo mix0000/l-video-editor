@@ -35,10 +35,16 @@
   font-style: normal;
 }
 
+html {
+  height: unset;
+}
+
 body {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
+  min-height: 100vh;
   margin: 0 auto;
 }
 
@@ -165,6 +171,7 @@ h1, h2, h3, h4, h5, h6, title {
 .info-container {
   .info-table-wrapper {
     display: flex;
+    flex-direction: column;
     gap: 1rem;
   }
 }
