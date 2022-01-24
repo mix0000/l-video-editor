@@ -1,4 +1,4 @@
-import { FileZipOutlined, GifOutlined } from "@ant-design/icons";
+import { FileZipOutlined, GifOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import { navigate } from "hookrouter";
 import React, { ReactNode } from "react";
@@ -32,6 +32,13 @@ const dashboardElements: DashboardElementProps[] = [
     title: "Video to GIF",
     route: "/videoToGif",
     icon: <GifOutlined />,
+  },
+  {
+    description:
+      "Get detailed information about of the most relevant technical and tag data for video files",
+    title: "Info",
+    route: "/info",
+    icon: <InfoCircleOutlined />,
   },
 ];
 

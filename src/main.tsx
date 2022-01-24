@@ -7,6 +7,7 @@ import { rootStore, RootStoreProvider } from "AppDir/app.store";
 import "antd/dist/antd.css";
 import "./assets/style.scss";
 import { Dashboard } from "AppDir/pages/Dashboard";
+import { Info } from "AppDir/pages/Info";
 import { Upload } from "AppDir/pages/Upload";
 import { VideoToGif } from "AppDir/pages/VideoToGif";
 
@@ -25,6 +26,7 @@ const routes = {
   "/dashboard": () => <Dashboard />,
   "/videoToGif": () => <VideoToGif />,
   "/compressVideo": () => <EmptyRoute title="Compress video" />,
+  "/info": () => <Info />,
 };
 
 export const Router = observer(() => {
