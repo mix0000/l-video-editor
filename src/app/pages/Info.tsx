@@ -5,7 +5,7 @@ import {
   VideoCameraOutlined,
   SnippetsOutlined,
 } from "@ant-design/icons";
-import { Space, Table } from "antd";
+import { PageHeader, Space, Table } from "antd";
 import Text from "antd/es/typography/Text";
 import { Track } from "mediainfo.js/dist/types";
 import { observer } from "mobx-react-lite";
@@ -80,10 +80,11 @@ export const Info = observer(() => {
 
   return (
     <div className="base-container info-container">
-      <Space align="center" style={{ marginBottom: "1rem" }}>
-        <h2 style={{ marginBottom: 0 }}>Video Info: </h2>
-        <Text keyboard>{currentFile?.name}</Text>
-      </Space>
+      <PageHeader
+        className="site-page-header"
+        onBack={() => history.back()}
+        title={<Text keyboard>{currentFile?.name}</Text>}
+      />
 
       <div className="info-table-wrapper">
         {formattedInfo.map(({ key, data, title }) => {

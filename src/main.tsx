@@ -1,7 +1,7 @@
 import { Spin } from "antd";
-import { navigate, useRoutes } from "hookrouter";
+import { navigate, usePath, useRoutes } from "hookrouter";
 import { observer } from "mobx-react-lite";
-import React, { useEffect } from "react";
+import React, { useEffect, useLayoutEffect } from "react";
 import ReactDOM from "react-dom";
 import { rootStore, RootStoreProvider } from "AppDir/app.store";
 import "antd/dist/antd.css";
@@ -31,6 +31,13 @@ const routes = {
 
 export const Router = observer(() => {
   const routeResult = useRoutes(routes);
+  const path = usePath();
+
+  useLayoutEffect(() => {
+    if (path !== "/" && !rootStore.ffmpegStore.currentFile) {
+      navigate("/");
+    }
+  }, [path]);
 
   return [rootStore.ffmpegStore.status, rootStore.mediaInfoStore.isReady].every(Boolean) ? (
     <RootStoreProvider store={rootStore}>
