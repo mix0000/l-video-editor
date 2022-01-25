@@ -9,18 +9,18 @@ const ffmpeg = createFFmpeg({
 interface FfmpegStore {
   ffmpeg: FFmpeg;
   currentFile: { file: Uint8Array; name: string; type: string } | null;
-  status: boolean;
+  isReady: boolean;
 }
 
 export const ffmpegStore = makeAutoObservable<FfmpegStore>({
   ffmpeg,
   currentFile: null,
-  status: ffmpeg.isLoaded(),
+  isReady: ffmpeg.isLoaded(),
 });
 
 (async () => {
   await ffmpeg.load();
   runInAction(() => {
-    ffmpegStore.status = ffmpeg.isLoaded();
+    ffmpegStore.isReady = ffmpeg.isLoaded();
   });
 })();

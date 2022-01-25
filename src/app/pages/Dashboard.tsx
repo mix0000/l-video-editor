@@ -34,8 +34,7 @@ const dashboardElements: DashboardElementProps[] = [
     icon: <GifOutlined />,
   },
   {
-    description:
-      "Get detailed information about of the most relevant technical and tag data for video files",
+    description: "Get detailed information about your video",
     title: "Info",
     route: "/info",
     icon: <InfoCircleOutlined />,

@@ -1,9 +1,9 @@
 import {
   AudioOutlined,
-  MenuOutlined,
   FileTextOutlined,
-  VideoCameraOutlined,
+  MenuOutlined,
   SnippetsOutlined,
+  VideoCameraOutlined,
 } from "@ant-design/icons";
 import { PageHeader, Space, Table } from "antd";
 import Text from "antd/es/typography/Text";
@@ -11,8 +11,6 @@ import { Track } from "mediainfo.js/dist/types";
 import { observer } from "mobx-react-lite";
 import React, { ReactNode, useLayoutEffect, useMemo, useState } from "react";
 import { useRootStore } from "AppDir/app.store";
-
-type VideoInfo = Track[];
 
 const typeIconMap: Record<string, ReactNode> = {
   Audio: <AudioOutlined />,
@@ -29,7 +27,7 @@ export const Info = observer(() => {
     mediaInfoStore: { mediaInfo },
     ffmpegStore: { currentFile },
   } = useRootStore();
-  const [videoInfo, setVideoInfo] = useState<VideoInfo>([]);
+  const [videoInfo, setVideoInfo] = useState<Track[]>([]);
 
   useLayoutEffect(() => {
     if (!currentFile) {
@@ -83,7 +81,11 @@ export const Info = observer(() => {
       <PageHeader
         className="site-page-header"
         onBack={() => history.back()}
-        title={<Text keyboard ellipsis>{currentFile?.name}</Text>}
+        title={
+          <Text keyboard ellipsis>
+            {currentFile?.name}
+          </Text>
+        }
       />
 
       <div className="info-table-wrapper">

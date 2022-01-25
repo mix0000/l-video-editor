@@ -4,12 +4,12 @@ import { observer } from "mobx-react-lite";
 import React, { useEffect, useLayoutEffect } from "react";
 import ReactDOM from "react-dom";
 import { rootStore, RootStoreProvider } from "AppDir/app.store";
-import 'antd/dist/antd.dark.css';
-import "./assets/style.scss";
 import { Dashboard } from "AppDir/pages/Dashboard";
 import { Info } from "AppDir/pages/Info";
 import { Upload } from "AppDir/pages/Upload";
 import { VideoToGif } from "AppDir/pages/VideoToGif";
+import "antd/dist/antd.dark.css";
+import "./assets/style.scss";
 
 const EmptyRoute = ({ title }: { title: string }) => {
   useEffect(() => {
@@ -39,7 +39,7 @@ export const Router = observer(() => {
     }
   }, [path]);
 
-  return [rootStore.ffmpegStore.status, rootStore.mediaInfoStore.isReady].every(Boolean) ? (
+  return [rootStore.ffmpegStore.isReady, rootStore.mediaInfoStore.isReady].every(Boolean) ? (
     <RootStoreProvider store={rootStore}>
       {routeResult || <EmptyRoute title="404 MOTHERFUCKER" />}
     </RootStoreProvider>
