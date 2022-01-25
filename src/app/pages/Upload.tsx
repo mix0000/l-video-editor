@@ -8,7 +8,7 @@ import { VideoUpload } from "AppDir/components/Uploader";
 
 export const Upload = observer(({ where }: { where: string }) => {
   const {
-    ffmpegStore: { currentFile },
+    fileStore: { file },
   } = useRootStore();
 
   return (
@@ -17,7 +17,7 @@ export const Upload = observer(({ where }: { where: string }) => {
       <VideoUpload />
       <Preview />
       <Button
-        disabled={!currentFile}
+        disabled={!file}
         type="primary"
         className="next-button"
         onClick={() => navigate(where)}

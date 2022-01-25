@@ -1,30 +1,24 @@
 import { observer } from "mobx-react-lite";
 import React, { useMemo } from "react";
 import { useRootStore } from "AppDir/app.store";
+import { getBase64 } from "../../utils/utils";
 
 export const Preview = observer(() => {
   const {
-    ffmpegStore: { currentFile },
+    fileStore: { file },
   } = useRootStore();
 
-  const currentFileSrc: string | null = useMemo(() => {
-    if (!currentFile) {
+  const src = useMemo(() => {
+    if (!file) {
       return null;
     }
-    return URL.createObjectURL(new Blob([currentFile.file.buffer]));
-  }, [currentFile]);
 
-  if (!currentFileSrc) {
+    return getBase64(file);
+  }, [file]);
+
+  if (!src) {
     return null;
   }
 
-  return (
-    <video
-      className="video-preview"
-      loop={true}
-      muted={true}
-      controls={true}
-      src={currentFileSrc}
-    />
-  );
+  return <video className="video-preview" loop={true} controls={true} src={src} />;
 });

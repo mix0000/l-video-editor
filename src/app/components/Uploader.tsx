@@ -1,14 +1,14 @@
 import { InboxOutlined } from "@ant-design/icons";
 import { fetchFile } from "@ffmpeg/ffmpeg";
-import { Upload, message } from "antd";
+import { message, Upload } from "antd";
 import { RcFile } from "antd/lib/upload/interface";
 import { runInAction } from "mobx";
 import { observer } from "mobx-react-lite";
 import { UploadRequestOption as RcCustomRequestOptions } from "rc-upload/lib/interface";
 import React from "react";
-import { ffmpegStore } from "../../ffmpeg";
-import { mediaInfoStore } from "../../mediaInfo";
-import { getFileExtension } from "../../utils/utils";
+import { fileStore } from "AppDir/store/fileStore";
+import { mediaInfoStore } from "AppDir/store/mediaInfoStore";
+import { getFileExtension, readChunk } from "../../utils/utils";
 
 const allowedTypes = [
   "video/mpeg",
@@ -23,32 +23,52 @@ const allowedTypes = [
   "video/3gpp2",
 ];
 
+const blobKey = "blob";
+
 async function toFfmpeg(file: RcFile) {
   const { mediaInfo } = mediaInfoStore;
-  message.info("Converting file to blob!");
+  runInAction(() => {
+    console.log(file);
+    fileStore.file = file;
+  });
+  await message.loading({ content: "Converting file..", key: blobKey });
   const currentVideoFile = await fetchFile(file);
-  const result = await mediaInfo?.analyzeData(
-    () => currentVideoFile.length,
-    () => currentVideoFile,
+  await message.success(
+    {
+      content: "Converting file..",
+      key: blobKey,
+      duration: 1,
+    },
+    1,
   );
+
+  runInAction(() => {
+    fileStore.chunk = currentVideoFile;
+  });
+
+  const result = await mediaInfo?.analyzeData(() => file.size, readChunk(file));
 
   if (typeof result === "object") {
     const videoInfo = result?.media?.track.find((type) => type["@type"] === "Video");
-    const details = {
-      duration: Number(videoInfo?.Duration),
-      fileSize: currentVideoFile.length,
-      framerate: Number(videoInfo?.FrameRate),
-      width: Number(videoInfo?.Width),
-      height: Number(videoInfo?.Height),
-      type: file.type,
-      extension: getFileExtension(file.name),
-    };
-    console.log(details);
-  }
+    runInAction(() => {
+      mediaInfoStore.fileInfo = result;
+    });
 
-  runInAction(() => {
-    ffmpegStore.currentFile = { file: currentVideoFile, name: file.name, type: file.type };
-  });
+    const extra = {
+      duration: Number(videoInfo?.Duration) || 0,
+      fileSize: file.size,
+      framerate: Number(videoInfo?.FrameRate) || 0,
+      width: Number(videoInfo?.Width) || 0,
+      height: Number(videoInfo?.Height) || 0,
+      type: file.type,
+      extension: getFileExtension(file.name) || "",
+      name: file.name,
+    };
+
+    runInAction(() => {
+      fileStore.extra = extra;
+    });
+  }
 }
 
 export const VideoUpload = observer(() => {

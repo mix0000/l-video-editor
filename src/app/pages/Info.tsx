@@ -9,7 +9,7 @@ import { PageHeader, Space, Table } from "antd";
 import Text from "antd/es/typography/Text";
 import { Track } from "mediainfo.js/dist/types";
 import { observer } from "mobx-react-lite";
-import React, { ReactNode, useLayoutEffect, useMemo, useState } from "react";
+import React, { ReactNode, useMemo, useState } from "react";
 import { useRootStore } from "AppDir/app.store";
 
 const typeIconMap: Record<string, ReactNode> = {
@@ -24,34 +24,27 @@ const getIcon = (type: string) => (typeIconMap[type] ? typeIconMap[type] : typeI
 
 export const Info = observer(() => {
   const {
-    mediaInfoStore: { mediaInfo },
-    ffmpegStore: { currentFile },
+    mediaInfoStore: { fileInfo },
+    fileStore,
   } = useRootStore();
-  const [videoInfo, setVideoInfo] = useState<Track[]>([]);
-
-  useLayoutEffect(() => {
-    if (!currentFile) {
-      return;
-    }
-
-    mediaInfo?.analyzeData(
-      () => currentFile.file.length,
-      () => currentFile.file,
-      (result) => {
-        if (typeof result === "object") {
-          setVideoInfo(result?.media?.track);
-        }
-      },
-    );
-  }, [currentFile, mediaInfo]);
+  const [videoInfo] = useState<Track[]>(() => {
+    return fileInfo?.media?.track || [];
+  });
 
   const formattedInfo = useMemo(() => {
     return videoInfo.map(({ "@type": type, ...rest }) => {
-      const data = Object.entries(rest).map(([key, value]) => ({
-        key: key + value,
-        description: key,
-        value,
-      }));
+      const data = [];
+
+      for (const [key, value] of Object.entries(rest)) {
+        if (typeof value === "string") {
+          data.push({
+            key: key + value,
+            description: key,
+            value,
+          });
+        }
+      }
+
       return {
         data,
         key: type,
@@ -81,9 +74,9 @@ export const Info = observer(() => {
       <PageHeader
         className="site-page-header"
         onBack={() => history.back()}
-        title={
+        subTitle={
           <Text keyboard ellipsis>
-            {currentFile?.name}
+            {fileStore?.extra?.name}
           </Text>
         }
       />
@@ -100,7 +93,6 @@ export const Info = observer(() => {
               dataSource={data}
               bordered
               title={title}
-              scroll={{ x: true }}
             />
           );
         })}

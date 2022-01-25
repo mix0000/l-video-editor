@@ -34,7 +34,7 @@ export const Router = observer(() => {
   const path = usePath();
 
   useLayoutEffect(() => {
-    if (path !== "/" && !rootStore.ffmpegStore.currentFile) {
+    if (path !== "/" && !rootStore.fileStore.chunk) {
       navigate("/");
     }
   }, [path]);
