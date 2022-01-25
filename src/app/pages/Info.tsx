@@ -83,7 +83,7 @@ export const Info = observer(() => {
       <PageHeader
         className="site-page-header"
         onBack={() => history.back()}
-        title={<Text keyboard>{currentFile?.name}</Text>}
+        title={<Text keyboard ellipsis>{currentFile?.name}</Text>}
       />
 
       <div className="info-table-wrapper">

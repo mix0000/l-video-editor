@@ -4,7 +4,7 @@ import { observer } from "mobx-react-lite";
 import React, { useEffect, useLayoutEffect } from "react";
 import ReactDOM from "react-dom";
 import { rootStore, RootStoreProvider } from "AppDir/app.store";
-import "antd/dist/antd.css";
+import 'antd/dist/antd.dark.css';
 import "./assets/style.scss";
 import { Dashboard } from "AppDir/pages/Dashboard";
 import { Info } from "AppDir/pages/Info";
