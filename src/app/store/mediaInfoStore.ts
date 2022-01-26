@@ -3,13 +3,15 @@ import { MediaInfo, ResultObject } from "mediainfo.js/dist/types";
 import { makeAutoObservable, runInAction } from "mobx";
 
 interface MediaInfoStore {
-  mediaInfo?: MediaInfo;
+  mediaInfo?: MediaInfo | null;
   isReady: boolean;
-  fileInfo?: ResultObject;
+  fileInfo?: ResultObject | null;
 }
 
 export const mediaInfoStore = makeAutoObservable<MediaInfoStore>({
+  mediaInfo: null,
   isReady: false,
+  fileInfo: null,
 });
 
 (async () => {

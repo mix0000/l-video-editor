@@ -1,4 +1,4 @@
-import { Button } from "antd";
+import { Button, PageHeader } from "antd";
 import { navigate } from "hookrouter";
 import { observer } from "mobx-react-lite";
 import React from "react";
@@ -13,17 +13,22 @@ export const Upload = observer(({ where }: { where: string }) => {
 
   return (
     <div className="base-container upload-container">
-      <h2>1. Upload your video: </h2>
+      <PageHeader
+        className="site-page-header"
+        title="1. Upload your video"
+        extra={
+          <Button
+            disabled={!file}
+            type="primary"
+            className="next-button"
+            onClick={() => navigate(where)}
+          >
+            Next
+          </Button>
+        }
+      />
       <VideoUpload />
       <Preview />
-      <Button
-        disabled={!file}
-        type="primary"
-        className="next-button"
-        onClick={() => navigate(where)}
-      >
-        Next
-      </Button>
     </div>
   );
 });

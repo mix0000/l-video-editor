@@ -5,11 +5,10 @@ import {
   SnippetsOutlined,
   VideoCameraOutlined,
 } from "@ant-design/icons";
-import { PageHeader, Space, Table } from "antd";
+import { PageHeader, Space, Spin, Table } from "antd";
 import Text from "antd/es/typography/Text";
-import { Track } from "mediainfo.js/dist/types";
 import { observer } from "mobx-react-lite";
-import React, { ReactNode, useMemo, useState } from "react";
+import React, { ReactNode, useMemo } from "react";
 import { useRootStore } from "AppDir/app.store";
 
 const typeIconMap: Record<string, ReactNode> = {
@@ -27,11 +26,10 @@ export const Info = observer(() => {
     mediaInfoStore: { fileInfo },
     fileStore,
   } = useRootStore();
-  const [videoInfo] = useState<Track[]>(() => {
-    return fileInfo?.media?.track || [];
-  });
 
   const formattedInfo = useMemo(() => {
+    const videoInfo = fileInfo?.media?.track || [];
+
     return videoInfo.map(({ "@type": type, ...rest }) => {
       const data = [];
 
@@ -56,20 +54,9 @@ export const Info = observer(() => {
         ),
       };
     });
-  }, [videoInfo]);
+  }, [fileInfo]);
 
-  const columns = [
-    {
-      title: "Description",
-      dataIndex: "description",
-    },
-    {
-      title: "Value",
-      dataIndex: "value",
-    },
-  ];
-
-  return (
+  return formattedInfo.length ? (
     <div className="base-container info-container">
       <PageHeader
         className="site-page-header"
@@ -89,7 +76,16 @@ export const Info = observer(() => {
               showHeader={false}
               pagination={false}
               size="small"
-              columns={columns}
+              columns={[
+                {
+                  title: "Description",
+                  dataIndex: "description",
+                },
+                {
+                  title: "Value",
+                  dataIndex: "value",
+                },
+              ]}
               dataSource={data}
               bordered
               title={title}
@@ -98,5 +94,7 @@ export const Info = observer(() => {
         })}
       </div>
     </div>
+  ) : (
+    <Spin size="large" />
   );
 });

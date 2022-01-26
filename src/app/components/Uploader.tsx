@@ -1,5 +1,4 @@
 import { InboxOutlined } from "@ant-design/icons";
-import { fetchFile } from "@ffmpeg/ffmpeg";
 import { message, Upload } from "antd";
 import { RcFile } from "antd/lib/upload/interface";
 import { runInAction } from "mobx";
@@ -23,35 +22,28 @@ const allowedTypes = [
   "video/3gpp2",
 ];
 
-const blobKey = "blob";
+const blobKey = "mediaInfo";
 
 async function toFfmpeg(file: RcFile) {
   const { mediaInfo } = mediaInfoStore;
   runInAction(() => {
-    console.log(file);
     fileStore.file = file;
   });
-  await message.loading({ content: "Converting file..", key: blobKey });
-  const currentVideoFile = await fetchFile(file);
-  await message.success(
-    {
-      content: "Converting file..",
-      key: blobKey,
-      duration: 1,
-    },
-    1,
-  );
 
-  runInAction(() => {
-    fileStore.chunk = currentVideoFile;
-  });
+  message.loading({ content: "Analyzing file..", key: blobKey });
 
   const result = await mediaInfo?.analyzeData(() => file.size, readChunk(file));
 
   if (typeof result === "object") {
-    const videoInfo = result?.media?.track.find((type) => type["@type"] === "Video");
+    const videoInfo = result?.media?.track.find((track) => track["@type"] === "Video");
+
     runInAction(() => {
       mediaInfoStore.fileInfo = result;
+    });
+
+    message.success({
+      content: "Analyzing file..",
+      key: blobKey,
     });
 
     const extra = {

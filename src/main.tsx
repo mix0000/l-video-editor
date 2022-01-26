@@ -34,7 +34,7 @@ export const Router = observer(() => {
   const path = usePath();
 
   useLayoutEffect(() => {
-    if (path !== "/" && !rootStore.fileStore.chunk) {
+    if (path !== "/" && !rootStore.fileStore.file) {
       navigate("/");
     }
   }, [path]);
