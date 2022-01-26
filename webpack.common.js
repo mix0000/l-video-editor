@@ -39,7 +39,7 @@ module.exports = {
   plugins: [
     new NodePolyfillPlugin(),
     new HtmlWebpackPlugin({
-      title: "L Video Editor - nginx",
+      title: "L Video Editor - nginx test",
       filename: "index.html",
       template: "public/index.html",
       inject: false,
