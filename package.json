@@ -4,7 +4,8 @@
   "description": "In-browser video editor",
   "main": "src/main.tsx",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development NODE_OPTIONS=--max-old-space-size=4096 webpack serve -c ./webpack.dev.js"
+    "dev": "cross-env NODE_ENV=development NODE_OPTIONS=--max-old-space-size=4096 webpack serve -c ./webpack.dev.js",
+    "prod": "cross-env NODE_ENV=production NODE_OPTIONS=--max-old-space-size=4096 webpack -c ./webpack.prod.js --progress"
   },
   "repository": {
     "type": "git",

@@ -1,3 +1,4 @@
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const FileManagerPlugin = require("filemanager-webpack-plugin");
 const { merge } = require("webpack-merge");
 const path = require("path");
@@ -29,6 +30,7 @@ const devBuild = merge(common, {
     },
   },
   plugins: [
+    new CleanWebpackPlugin(),
     new FileManagerPlugin({
       events: {
         onEnd: {
