@@ -1,0 +1,22 @@
+
+name: Build and Deploy
+on:
+  push:
+    branches: [main]
+jobs:
+  test_me:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: testing nginx server ssh connection
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.USER_NAME }}
+          password: ${{ secrets.PASSWORD }}
+          script: |
+            cd /var/www/l-video-editor
+            git pull origin main
+            npm install
+            npm run prod
+            systemctl restart nginx
