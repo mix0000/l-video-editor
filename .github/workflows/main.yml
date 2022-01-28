@@ -15,8 +15,9 @@ jobs:
           username: ${{ secrets.USER_NAME }}
           password: ${{ secrets.PASSWORD }}
           script: |
+            rm -r /var/www/l-video-editor/*
             cd /var/www/l-video-editor
-            git pull origin main
+            git clone https://github.com/mix0000/l-video-editor.git .
             npm install
             npm run prod
             systemctl restart nginx
