@@ -220,7 +220,7 @@ h1, h2, h3, h4, h5, h6, title {
     grid-template-columns: 1fr;
     grid-template-areas: "preview"
                      "output";
-    grid-template-rows:  0.5fr 0.5fr;
+    grid-template-rows: repeat(2, minmax(200px, 0.5fr));
     grid-row-gap: 1rem;
     align-items: stretch;
     height: 100%;
