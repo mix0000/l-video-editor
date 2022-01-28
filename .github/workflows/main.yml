@@ -15,8 +15,9 @@ jobs:
           username: ${{ secrets.USER_NAME }}
           password: ${{ secrets.PASSWORD }}
           script: |
-            cd /var/www
-            rm -r l-video-editor/*
+            rm -rf /var/www/l-video-editor
+            cd /var/www/
+            mkdir l-video-editor
             cd l-video-editor
             git clone https://github.com/mix0000/l-video-editor.git .
             npm install
