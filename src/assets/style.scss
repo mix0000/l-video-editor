@@ -48,7 +48,7 @@ body {
 }
 
 #app {
-  max-width: 57.5rem; // 920px
+  max-width: 900px;
   width: 100%;
 }
 
@@ -177,8 +177,7 @@ body {
   video {
     background-size: 101% 101%;
     background-position: -1px -1px;
-    transition: background-image 0.2s ease-in-out;
-    background-image: var(--thumb-gradient);
+    background-color: black;
     border: 1px solid transparent;
     width: calc(100% + 1px);
     height: calc(100% + 1px);
@@ -209,5 +208,62 @@ h1, h2, h3, h4, h5, h6, title {
     .ant-table-title {
       background-color: #1f1f1f;
     }
+  }
+}
+
+.video-to-gif {
+  display: flex;
+  flex-direction: column;
+
+  .previews {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-areas: "preview"
+                     "output";
+    grid-template-rows:  0.5fr 0.5fr;
+    grid-row-gap: 1rem;
+    align-items: stretch;
+    height: 100%;
+
+    .preview-container {
+      grid-area: preview;
+    }
+    .output-container {
+      grid-area: output;
+    }
+
+    .preview-container,
+    .output-container {
+      display: flex;
+      flex-direction: column;
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: .5em;
+
+        h3 {
+          margin-bottom: 0;
+        }
+      }
+    }
+
+    .preview-wrapper{
+      margin-top: 0;
+    }
+  }
+}
+
+.output-wrapper {
+  .no-file-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background: hsla(0,0%,100%,.04);
+    border: 1px dashed #434343;
+    border-radius: 12px;
   }
 }

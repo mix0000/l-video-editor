@@ -21,3 +21,20 @@ export const fileStore = makeAutoObservable<FileStore>({
   file: null,
   extra: null,
 });
+
+interface OutputStore extends Omit<FileStore, "file" | "chunk" | "extra"> {
+  urlObject: string | null;
+  extra: {
+    fileSize: number;
+    width: number;
+    height: number;
+    type: string;
+    extension: string;
+    name: string;
+  } | null;
+}
+
+export const outputStore = makeAutoObservable<OutputStore>({
+  extra: null,
+  urlObject: null,
+});

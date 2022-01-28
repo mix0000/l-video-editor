@@ -5,9 +5,14 @@ const path = require("path");
 
 const common = require("./webpack.common");
 
-const wasmFileName = "MediaInfoModule.wasm";
-
-const wasmFile = path.resolve(__dirname, "node_modules", "mediainfo.js", "dist", wasmFileName);
+const mediaInfoWasm = "MediaInfoModule.wasm";
+const mediaInfoWasmFile = path.resolve(
+  __dirname,
+  "node_modules",
+  "mediainfo.js",
+  "dist",
+  mediaInfoWasm,
+);
 
 const devBuild = merge(common, {
   mode: "development",
@@ -40,8 +45,8 @@ const devBuild = merge(common, {
               destination: path.resolve(__dirname, "dist"),
             },
             {
-              source: wasmFile,
-              destination: path.resolve(__dirname, "dist", wasmFileName),
+              source: mediaInfoWasmFile,
+              destination: path.resolve(__dirname, "dist", mediaInfoWasm),
             },
           ],
         },

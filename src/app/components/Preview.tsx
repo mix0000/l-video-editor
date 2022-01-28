@@ -1,11 +1,13 @@
+import Text from "antd/es/typography/Text";
+import Title from "antd/es/typography/Title";
 import { observer } from "mobx-react-lite";
 import React, { useMemo } from "react";
 import { useRootStore } from "AppDir/app.store";
-import { getBase64 } from "../../utils/utils";
+import { formatBytes, getBase64 } from "../../utils/utils";
 
-export const Preview = observer(() => {
+export const Preview = observer(({ showHeader = false }: { showHeader?: boolean }) => {
   const {
-    fileStore: { file },
+    fileStore: { file, extra },
   } = useRootStore();
 
   const src = useMemo(() => {
@@ -16,9 +18,17 @@ export const Preview = observer(() => {
     return getBase64(file);
   }, [file]);
 
-  if (!src) {
-    return null;
-  }
-
-  return <video className="video-preview" loop={true} controls={true} src={src} />;
+  return (
+    <>
+      {showHeader && (
+        <div className="header">
+          <Title level={3}>Output</Title>
+          {extra && <Text type="secondary">Size: {formatBytes(extra.fileSize)}</Text>}
+        </div>
+      )}
+      <div className="preview-wrapper">
+        {src && <video loop={true} controls={true} src={src} width="100%" height="100%" />}
+      </div>
+    </>
+  );
 });

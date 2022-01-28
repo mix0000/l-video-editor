@@ -1,5 +1,5 @@
 import React, { createContext, useContext } from "react";
-import { fileStore } from "AppDir/store/fileStore";
+import { fileStore, outputStore } from "AppDir/store/fileStore";
 import { ffmpegStore } from "./store/ffmpegStore";
 import { mediaInfoStore } from "./store/mediaInfoStore";
 
@@ -7,6 +7,7 @@ export interface RootStoreContextValue {
   ffmpegStore: typeof ffmpegStore;
   mediaInfoStore: typeof mediaInfoStore;
   fileStore: typeof fileStore;
+  outputStore: typeof outputStore;
 }
 
 export interface WithRootStoreProps {
@@ -17,6 +18,7 @@ export const rootStore: RootStoreContextValue = {
   ffmpegStore,
   mediaInfoStore,
   fileStore,
+  outputStore,
 };
 
 export const RootStoreContext = createContext<RootStoreContextValue>({} as RootStoreContextValue);

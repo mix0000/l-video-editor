@@ -7,7 +7,7 @@ import { UploadRequestOption as RcCustomRequestOptions } from "rc-upload/lib/int
 import React from "react";
 import { fileStore } from "AppDir/store/fileStore";
 import { mediaInfoStore } from "AppDir/store/mediaInfoStore";
-import { getFileExtension, readChunk } from "../../utils/utils";
+import { formatBytes, getFileExtension, readChunk } from "../../utils/utils";
 
 const allowedTypes = [
   "video/mpeg",
@@ -57,6 +57,8 @@ async function toFfmpeg(file: RcFile) {
       name: file.name,
     };
 
+    console.log(formatBytes(extra.fileSize));
+
     runInAction(() => {
       fileStore.extra = extra;
     });
@@ -73,8 +75,8 @@ export const VideoUpload = observer(() => {
     return true;
   };
 
-  const customRequest = (options: RcCustomRequestOptions) => {
-    toFfmpeg(options.file as RcFile);
+  const customRequest = async (options: RcCustomRequestOptions) => {
+    await toFfmpeg(options.file as RcFile);
   };
 
   return (
