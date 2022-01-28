@@ -54,3 +54,13 @@ export function formatBytes(bytes: number, decimals = 2) {
 
   return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
 }
+
+export function downloadURI(uri: string, name: string) {
+  const link = document.createElement("a");
+  link.setAttribute("download", name);
+  link.href = uri;
+  link.style.display = "none";
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+}

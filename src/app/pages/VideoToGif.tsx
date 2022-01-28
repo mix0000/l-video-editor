@@ -1,6 +1,6 @@
 import { CloudDownloadOutlined, GifOutlined } from "@ant-design/icons";
 import { fetchFile } from "@ffmpeg/ffmpeg";
-import { Button, Col, Divider, Input, InputNumber, PageHeader, Row, Slider } from "antd";
+import { Button, Col, Divider, Input, InputNumber, message, PageHeader, Row, Slider } from "antd";
 import Title from "antd/es/typography/Title";
 import { debounce } from "lodash";
 import { runInAction } from "mobx";
@@ -12,7 +12,7 @@ import { Preview } from "AppDir/components/Preview";
 import { ffmpegStore } from "AppDir/store/ffmpegStore";
 import { fileStore, outputStore } from "AppDir/store/fileStore";
 import { mediaInfoStore } from "AppDir/store/mediaInfoStore";
-import { bufferToURLObject, readChunk } from "../../utils/utils";
+import { bufferToURLObject, downloadURI, readChunk } from "../../utils/utils";
 
 function findRatio(a: number, b: number): number {
   return b == 0 ? a : findRatio(b, a % b);
@@ -24,6 +24,18 @@ function increaseWidthByHeight(w: number, h: number, newHeight: number): number 
 
 function increaseHeightByWidth(w: number, h: number, newWidth: number): number {
   return (h / w) * newWidth;
+}
+
+function download() {
+  const { urlObject } = outputStore;
+  const { extra } = fileStore;
+
+  if (!urlObject || !extra) {
+    message.error("There is nothing to download");
+    return;
+  }
+
+  downloadURI(urlObject, extra.name);
 }
 
 async function convertFileToGif(width: number, height: number, fps: number) {
@@ -117,7 +129,7 @@ export const VideoToGif = observer(() => {
         title="Video To GIF"
         onBack={() => history.back()}
         extra={[
-          <Button disabled key="download" icon={<CloudDownloadOutlined />}>
+          <Button onClick={download} key="download" icon={<CloudDownloadOutlined />}>
             Download
           </Button>,
           <Button

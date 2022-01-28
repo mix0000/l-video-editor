@@ -3,11 +3,12 @@ import { message, Upload } from "antd";
 import { RcFile } from "antd/lib/upload/interface";
 import { runInAction } from "mobx";
 import { observer } from "mobx-react-lite";
+import path from "path-browserify";
 import { UploadRequestOption as RcCustomRequestOptions } from "rc-upload/lib/interface";
 import React from "react";
 import { fileStore } from "AppDir/store/fileStore";
 import { mediaInfoStore } from "AppDir/store/mediaInfoStore";
-import { formatBytes, getFileExtension, readChunk } from "../../utils/utils";
+import { readChunk } from "../../utils/utils";
 
 const allowedTypes = [
   "video/mpeg",
@@ -45,7 +46,6 @@ async function toFfmpeg(file: RcFile) {
       content: "Analyzing file..",
       key: blobKey,
     });
-
     const extra = {
       duration: Number(videoInfo?.Duration) || 0,
       fileSize: file.size,
@@ -53,11 +53,9 @@ async function toFfmpeg(file: RcFile) {
       width: Number(videoInfo?.Width) || 0,
       height: Number(videoInfo?.Height) || 0,
       type: file.type,
-      extension: getFileExtension(file.name) || "",
-      name: file.name,
+      extension: path.parse(file.name).ext,
+      name: path.parse(file.name).name,
     };
-
-    console.log(formatBytes(extra.fileSize));
 
     runInAction(() => {
       fileStore.extra = extra;
