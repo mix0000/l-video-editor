@@ -1,14 +1,21 @@
 import Text from "antd/es/typography/Text";
 import Title from "antd/es/typography/Title";
 import { observer } from "mobx-react-lite";
-import React from "react";
+import React, { useEffect } from "react";
 import { useRootStore } from "AppDir/app.store";
+import { outputStore } from "AppDir/store/fileStore";
 import { formatBytes } from "../../utils/utils";
 
 export const Output = observer(({ showHeader = false }: { showHeader?: boolean }) => {
   const {
     outputStore: { urlObject, extra },
   } = useRootStore();
+
+  useEffect(() => {
+    return () => {
+      outputStore.empty();
+    };
+  }, []);
 
   return (
     <>

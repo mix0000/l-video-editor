@@ -4,6 +4,7 @@ import { observer } from "mobx-react-lite";
 import React, { useEffect, useLayoutEffect } from "react";
 import ReactDOM from "react-dom";
 import { rootStore, RootStoreProvider } from "AppDir/app.store";
+import { ConsoleModel } from "AppDir/components/ConsoleModel";
 import { Dashboard } from "AppDir/pages/Dashboard";
 import { Info } from "AppDir/pages/Info";
 import { Upload } from "AppDir/pages/Upload";
@@ -41,7 +42,12 @@ export const Router = observer(() => {
 
   return [rootStore.ffmpegStore.isReady, rootStore.mediaInfoStore.isReady].every(Boolean) ? (
     <RootStoreProvider store={rootStore}>
-      {routeResult || <EmptyRoute title="404 MOTHERFUCKER" />}
+      {(
+        <>
+          {routeResult}
+          <ConsoleModel />
+        </>
+      ) || <EmptyRoute title="404 MOTHERFUCKER" />}
     </RootStoreProvider>
   ) : (
     <div className="loading">

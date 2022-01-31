@@ -34,6 +34,18 @@
   font-weight: bold;
   font-style: normal;
 }
+@font-face {
+  font-family: 'Courier New';
+  src: url(fonts/courier-new.ttf) format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Consolas';
+  src: url(fonts/consola.ttf) format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 
 html {
   height: unset;
@@ -265,5 +277,29 @@ h1, h2, h3, h4, h5, h6, title {
     background: hsla(0,0%,100%,.04);
     border: 1px dashed #434343;
     border-radius: 12px;
+  }
+}
+
+.terminal {
+  display: flex;
+  flex-direction: column-reverse;
+  font-family: Consolas, "Courier New", monospace;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 19px;
+  letter-spacing: 0;
+  font-feature-settings: "liga" 0, "calt" 0;
+  cursor: text;
+  margin-bottom: 0;
+  height: calc(80vh - 100px);
+  overflow-y: auto;
+  color: #d4d4d4;
+  background-color: #0C0C0C;
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
   }
 }

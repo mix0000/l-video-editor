@@ -32,9 +32,14 @@ interface OutputStore extends Omit<FileStore, "file" | "chunk" | "extra"> {
     extension: string;
     name: string;
   } | null;
+  empty(): void;
 }
 
 export const outputStore = makeAutoObservable<OutputStore>({
   extra: null,
   urlObject: null,
+  empty() {
+    this.extra = null;
+    this.urlObject = null;
+  },
 });

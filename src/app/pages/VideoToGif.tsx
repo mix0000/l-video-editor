@@ -5,13 +5,14 @@ import Title from "antd/es/typography/Title";
 import { debounce } from "lodash";
 import { runInAction } from "mobx";
 import { observer } from "mobx-react-lite";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useRootStore } from "AppDir/app.store";
 import { Output } from "AppDir/components/Output";
 import { Preview } from "AppDir/components/Preview";
 import { ffmpegStore } from "AppDir/store/ffmpegStore";
 import { fileStore, outputStore } from "AppDir/store/fileStore";
 import { mediaInfoStore } from "AppDir/store/mediaInfoStore";
+import { modalStore } from "AppDir/store/modalStore";
 import { bufferToURLObject, downloadURI, readChunk } from "../../utils/utils";
 
 function findRatio(a: number, b: number): number {
@@ -42,8 +43,15 @@ async function convertFileToGif(width: number, height: number, fps: number) {
   const { ffmpeg } = ffmpegStore;
   const { file, extra } = fileStore;
   const { mediaInfo } = mediaInfoStore;
-  ffmpeg.setLogger(({ type, message }) => {
-    console.log(type, message);
+
+  runInAction(() => {
+    modalStore.isOpen = true;
+  });
+
+  ffmpeg.setLogger(({ message }) => {
+    runInAction(() => {
+      modalStore.logs.push(message);
+    });
   });
   const chunkFile = await fetchFile(file!);
   const inputFileName = "video";
@@ -63,11 +71,12 @@ async function convertFileToGif(width: number, height: number, fps: number) {
 
   runInAction(() => {
     outputStore.urlObject = urlObject;
+    modalStore.isOpen = false;
   });
 
   const result = await mediaInfo?.analyzeData(
     () => data.buffer.byteLength,
-    readChunk(new Blob([data])),
+    readChunk(new Blob([data.buffer])),
   );
 
   if (typeof result === "object") {
@@ -85,6 +94,11 @@ async function convertFileToGif(width: number, height: number, fps: number) {
       outputStore.extra = extra;
     });
   }
+
+  return () => {
+    ffmpeg.FS("unlink", gifFullName);
+    ffmpeg.FS("unlink", inputFullName);
+  };
 }
 
 export const VideoToGif = observer(() => {
@@ -97,6 +111,7 @@ export const VideoToGif = observer(() => {
   const [fpsValue, setFpsValue] = useState(maxFps);
   const [width, setWidth] = useState(maxWidth);
   const [height, setHeight] = useState(maxHeight);
+  const unLinkRef = useRef<VoidFunction>(() => 0);
 
   const onFpsChange = (value: number) => {
     setFpsValue(value);
@@ -122,6 +137,12 @@ export const VideoToGif = observer(() => {
     setWidth(increaseWidthByHeight(width, height, newHeight));
   }, 250);
 
+  useEffect(() => {
+    return () => {
+      unLinkRef.current?.();
+    };
+  }, []);
+
   return (
     <div className="base-container video-to-gif">
       <PageHeader
@@ -136,8 +157,8 @@ export const VideoToGif = observer(() => {
             key="convert"
             type="primary"
             icon={<GifOutlined />}
-            onClick={() => {
-              convertFileToGif(width, height, fpsValue);
+            onClick={async () => {
+              unLinkRef.current = await convertFileToGif(width, height, fpsValue);
             }}
           >
             Convert
