@@ -6,6 +6,29 @@ import { useRootStore } from "AppDir/app.store";
 import { outputStore } from "AppDir/store/fileStore";
 import { formatBytes } from "../../utils/utils";
 
+const outputByType: Record<string, React.ComponentType<{ src: string }>> = {
+  video: ({ src }) => <video loop={true} controls={true} src={src} width="100%" height="100%" />,
+  image: ({ src }) => (
+    <img
+      src={src}
+      width="100%"
+      style={{ objectFit: "contain", maxWidth: "100%" }}
+      alt="output image"
+    />
+  ),
+  audio: ({ src }) => <audio src={src} />,
+};
+
+function getOutputByType(mimeType?: string): React.ComponentType<{ src: string }> | null {
+  if (!mimeType) {
+    return null;
+  }
+
+  const [type] = mimeType.split("/");
+
+  return outputByType[type] || null;
+}
+
 export const Output = observer(({ showHeader = false }: { showHeader?: boolean }) => {
   const {
     outputStore: { urlObject, extra },
@@ -17,6 +40,8 @@ export const Output = observer(({ showHeader = false }: { showHeader?: boolean }
     };
   }, []);
 
+  const Output = getOutputByType(extra?.type);
+
   return (
     <>
       {showHeader && (
@@ -26,9 +51,8 @@ export const Output = observer(({ showHeader = false }: { showHeader?: boolean }
         </div>
       )}
       <div className="preview-wrapper output-wrapper">
-        {urlObject ? (
-          // <video loop={true} controls={true} src={urlObject} width="100%" height="100%" />
-          <img src={urlObject} width="100%" style={{ objectFit: "contain", maxWidth: "100%" }} />
+        {urlObject && Output ? (
+          <Output src={urlObject} />
         ) : (
           <div className="no-file-container">You will see output here</div>
         )}
