@@ -107,9 +107,10 @@ body {
   .dashboard-elements {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
 
     .dashboard-element {
-      max-width: 200px;
+      width: calc(100% / 3);
       border-radius: 8px;
       padding: 1rem 2rem;
       cursor: pointer;
@@ -135,6 +136,7 @@ body {
         font-weight: bold;
         font-size: 2rem;
         margin-bottom: 0;
+        line-height: 2rem;
       }
 
       &:hover {

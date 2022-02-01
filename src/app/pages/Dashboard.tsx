@@ -1,4 +1,4 @@
-import { FileZipOutlined, GifOutlined, InfoCircleOutlined } from "@ant-design/icons";
+import { AudioOutlined, FileZipOutlined, GifOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import { PageHeader } from "antd";
 import { navigate } from "hookrouter";
 import React, { ReactNode } from "react";
@@ -26,6 +26,12 @@ const dashboardElements: DashboardElementProps[] = [
     title: "Compressor",
     route: "/compressVideo",
     icon: <FileZipOutlined />,
+  },
+  {
+    description: "Get audio track from your video with extended customization",
+    title: "Audio from video",
+    route: "/getAudio",
+    icon: <AudioOutlined />,
   },
   {
     description: "Convert any video formats to GIF",
