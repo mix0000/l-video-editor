@@ -1,5 +1,6 @@
 import { AudioOutlined, FileZipOutlined, GifOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import { PageHeader } from "antd";
+import clsx from "clsx";
 import { navigate } from "hookrouter";
 import React, { ReactNode } from "react";
 
@@ -8,11 +9,21 @@ interface DashboardElementProps {
   icon: ReactNode;
   route: string;
   title: string;
+  disabled?: boolean;
 }
 
-const DashboardElement: React.FC<DashboardElementProps> = ({ description, icon, route, title }) => {
+const DashboardElement: React.FC<DashboardElementProps> = ({
+  description,
+  icon,
+  route,
+  title,
+  disabled,
+}) => {
   return (
-    <div className="dashboard-element" onClick={() => navigate(route)}>
+    <div
+      className={clsx("dashboard-element", disabled && "disabled")}
+      onClick={() => navigate(route)}
+    >
       <span className="icon-container">{icon}</span>
       <h3 className="title">{title}</h3>
       {description ?? <p className="description">{description}</p>}
@@ -21,18 +32,6 @@ const DashboardElement: React.FC<DashboardElementProps> = ({ description, icon, 
 };
 
 const dashboardElements: DashboardElementProps[] = [
-  {
-    description: "Take large video files and compress them to a smaller file size",
-    title: "Compressor",
-    route: "/compressVideo",
-    icon: <FileZipOutlined />,
-  },
-  {
-    description: "Get audio track from your video with extended customization",
-    title: "Audio from video",
-    route: "/getAudio",
-    icon: <AudioOutlined />,
-  },
   {
     description: "Convert any video formats to GIF",
     title: "Video to GIF",
@@ -44,6 +43,20 @@ const dashboardElements: DashboardElementProps[] = [
     title: "Info",
     route: "/info",
     icon: <InfoCircleOutlined />,
+  },
+  {
+    description: "Take large video files and compress them to a smaller file size",
+    title: "Compressor",
+    route: "/compressVideo",
+    icon: <FileZipOutlined />,
+    disabled: true,
+  },
+  {
+    description: "Get audio track from your video with extended customization",
+    title: "Audio from video",
+    route: "/getAudio",
+    icon: <AudioOutlined />,
+    disabled: true,
   },
 ];
 

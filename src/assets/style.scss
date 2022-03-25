@@ -114,6 +114,10 @@ body {
       border-radius: 8px;
       padding: 1rem 2rem;
       cursor: pointer;
+      &.disabled {
+        opacity: 30%;
+        pointer-events: none;
+      }
 
       .icon-container {
         border-radius: 100%;
