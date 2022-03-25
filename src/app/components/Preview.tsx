@@ -22,7 +22,7 @@ export const Preview = observer(({ showHeader = false }: { showHeader?: boolean 
     <>
       {showHeader && (
         <div className="header">
-          <Title level={3}>Output</Title>
+          <Title level={3}>Input</Title>
           {extra && <Text type="secondary">Size: {formatBytes(extra.fileSize)}</Text>}
         </div>
       )}
